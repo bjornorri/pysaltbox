@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pysaltbox",
-    version="0.1.0",
+    version="0.1.2",
     author="Björn Orri Saemundsson",
     author_email="bjornorri@gmail.com",
     description="Interface with your Salt Fiber Box router in python.",
@@ -17,6 +17,16 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+    ],
+    install_requires=[
+        'beautifulsoup4',
+        'certifi',
+        'chardet',
+        'idna',
+        'py-mini-racer',
+        'requests',
+        'soupsieve',
+        'urllib3'
     ],
     python_requires='>=3.6',
 )

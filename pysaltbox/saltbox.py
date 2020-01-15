@@ -1,5 +1,5 @@
 import requests
-import utils
+from . import utils
 from py_mini_racer import py_mini_racer
 
 class SaltBox:
