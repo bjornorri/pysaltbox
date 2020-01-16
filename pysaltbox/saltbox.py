@@ -1,10 +1,9 @@
 import requests
 from . import utils
-from py_mini_racer import py_mini_racer
 
 class SaltBox:
     def __init__(self, host, username, password):
-        self.host = host
+        self.host = utils.clean_host(host)
         self.username = utils.hash_string(username)
         self.password = utils.hash_string(password)
         self.session = None
@@ -15,18 +14,17 @@ class SaltBox:
             self._login()
 
         try:
-            url = '{}/clients.htm?t={}'.format(self.host, utils.timestamp())
+            url = 'http://{}/clients.htm?t={}'.format(self.host, utils.timestamp())
             httoken = self._get_httoken(url)
 
             headers = {'Referer': url}
             query = '_tn={}&_t={}'.format(httoken, utils.timestamp())
-            url = '{}/cgi/cgi_clients.js?{}'.format(self.host, query)
+            url = 'http://{}/cgi/cgi_clients.js?{}'.format(self.host, query)
             res = self.session.get(url, headers=headers)
 
             js_code = res.text
-            ctx = py_mini_racer.MiniRacer()
-            ctx.eval(js_code)
-            client_info = ctx.eval('online_client')
+            client_info = utils.extract_online_client_info(js_code)
+
             clients = utils.format_online_clients(client_info)
             return clients
         except:
@@ -38,13 +36,13 @@ class SaltBox:
     def _login(self):
         self.session = requests.Session()
 
-        url = "{}/login.htm".format(self.host)
+        url = "http://{}/login.htm".format(self.host)
         httoken = self._get_httoken(url)
 
-        url = '{}/login.cgi'.format(self.host)
+        url = 'http://{}/login.cgi'.format(self.host)
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Referer': '{}/login.htm'.format(self.host)
+            'Referer': 'http://{}/login.htm'.format(self.host)
         }
         data = {
             'usr': self.username,

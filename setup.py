@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pysaltbox",
-    version="0.1.2",
+    version="0.1.3",
     author="Björn Orri Saemundsson",
     author_email="bjornorri@gmail.com",
     description="Interface with your Salt Fiber Box router in python.",
