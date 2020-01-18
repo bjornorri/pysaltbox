@@ -3,6 +3,8 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+REQUIREMENTS = [i.strip() for i in open("requirements.txt").readlines()]
+
 setuptools.setup(
     name="saltbox",
     version="0.1.0",
@@ -18,14 +20,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=[
-        'beautifulsoup4',
-        'certifi',
-        'chardet',
-        'idna',
-        'requests',
-        'soupsieve',
-        'urllib3',
-    ],
+    install_requires=REQUIREMENTS,
     python_requires='>=3.6',
 )
