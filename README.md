@@ -11,4 +11,3 @@ This project is developed as part of an integration for [Home Assistant](https:/
 
     router = SaltBox(router_host, 'username', 'password')
     clients = router.get_online_clients()
-    router.logout()

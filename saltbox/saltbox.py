@@ -28,23 +28,10 @@ class SaltBox:
             clients = utils.format_online_clients(client_info)
             return clients
         except:
-            self.session = None
+            self._logout()
             if retry_allowed:
                 return self.get_online_clients(retry_allowed=False)
             raise Exception('Could not get online clients')
-
-    def logout(self):
-        url = "http://{}/index.htm".format(self.host)
-        httoken = self._get_httoken(url)
-
-        url = 'http://{}/logout.cgi'.format(self.host)
-        headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Referer': 'http://{}/index.htm'.format(self.host)
-        }
-        data = { 'httoken': httoken }
-        res = self.session.post(url, headers=headers, data=data)
-        self.session = None
 
     def _login(self):
         self.session = requests.Session()
@@ -67,6 +54,19 @@ class SaltBox:
             self.session = None
             message = 'Login failed. Credentials might be invalid or another client might be logged in to the router interface.'
             raise Exception(message)
+
+    def _logout(self):
+        url = "http://{}/index.htm".format(self.host)
+        httoken = self._get_httoken(url)
+
+        url = 'http://{}/logout.cgi'.format(self.host)
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Referer': 'http://{}/index.htm'.format(self.host)
+        }
+        data = { 'httoken': httoken }
+        res = self.session.post(url, headers=headers, data=data)
+        self.session = None
 
     def _get_httoken(self, url):
         if self.session == None:
