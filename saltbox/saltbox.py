@@ -62,12 +62,11 @@ class SaltBox:
             'pws': self.password,
             'httoken': httoken
         }
-        res = requests.post(url, headers=headers, data=data)
+        res = self.session.post(url, headers=headers, data=data)
         if 'login.htm' in res.url:
             self.session = None
             message = 'Login failed. Credentials might be invalid or another client might be logged in to the router interface.'
             raise Exception(message)
-        self.session.cookies = res.history[0].cookies
 
     def _get_httoken(self, url):
         if self.session == None:
