@@ -7,7 +7,7 @@ REQUIREMENTS = [i.strip() for i in open("requirements.txt").readlines()]
 
 setuptools.setup(
     name="saltbox",
-    version="0.1.1",
+    version="0.1.2",
     author="Björn Orri Saemundsson",
     author_email="bjornorri@gmail.com",
     description="Interface with your Salt Fiber Box router in python.",
