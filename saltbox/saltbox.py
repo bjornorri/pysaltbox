@@ -2,7 +2,7 @@ import requests
 from . import exceptions
 from . import utils
 
-TIMEOUT = 2.0
+TIMEOUT = 5.0
 
 class SaltBox:
     def __init__(self, host, username, password):
