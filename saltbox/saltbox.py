@@ -11,12 +11,9 @@ class SaltBox:
         self.password = utils.hash_string(password)
         self.session = None
 
-
     def get_online_clients(self, retry_allowed=True):
-        if self.session == None:
-            self._login()
-
         try:
+            self._login()
             url = 'http://{}/clients.htm?t={}'.format(self.host, utils.timestamp())
             httoken = self._get_httoken(url)
 
@@ -31,11 +28,11 @@ class SaltBox:
 
             clients = utils.format_online_clients(client_info)
             return clients
-        except:
-            self._logout()
-            if retry_allowed:
-                return self.get_online_clients(retry_allowed=False)
+        except exceptions.RouterLoginException as e:
             raise
+        except Exception as e:
+            message = 'The router is not reachable.'
+            raise exceptions.RouterNotReachableException(message)
 
     def _login(self):
         self.session = requests.Session()
