@@ -1,4 +1,5 @@
 import requests
+from . import exceptions
 from . import utils
 
 TIMEOUT = 2.0
@@ -56,7 +57,7 @@ class SaltBox:
         if 'login.htm' in res.url:
             self.session = None
             message = 'Login failed. Credentials might be invalid or another client might be logged in to the router interface.'
-            raise Exception(message)
+            raise exceptions.RouterLoginException(message)
 
     def _logout(self):
         url = "http://{}/index.htm".format(self.host)
