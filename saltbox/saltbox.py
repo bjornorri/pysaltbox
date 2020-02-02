@@ -11,7 +11,7 @@ class SaltBox:
         self.password = utils.hash_string(password)
         self.session = None
 
-    def get_online_clients(self, retry_allowed=True):
+    def get_online_clients(self):
         try:
             self._login()
             url = 'http://{}/clients.htm?t={}'.format(self.host, utils.timestamp())
